@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import {
   generateStaticParams,
+  IntlayerProvider,
   type LocalPromiseParams,
   type Next15LayoutIntlayer,
 } from "next-intlayer";
@@ -38,9 +39,12 @@ export const generateMetadata = async ({
 const LocaleLayout: Next15LayoutIntlayer = async ({ children, params }) => {
   const { locale } = await params;
   const validLocale = locale as LocalesValues;
+
   return (
     <html lang={validLocale} dir={getHTMLTextDir(validLocale)}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <IntlayerProvider locale={locale}>{children}</IntlayerProvider>
+      </body>
     </html>
   );
 };
